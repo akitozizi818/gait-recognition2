@@ -1,0 +1,17 @@
+{
+    "dataset_root": "./sorted_dataset/dataset",
+    "test_data_dir": "./sorted_dataset/test_dataset",
+    "img_size": [
+        34,
+        34
+    ],
+    "batch_size": 8,
+    "num_classes": 10,
+    "validation_split": 0.2,
+    "iterations": 30,
+    "epochs": 20,
+    "best_model_name": "bad_r_l_merged_1_14_model.h5",
+    "report_file_name": "bad_r_l_merged_classification_report.txt",
+    "incorrect_predictions_file_name": "bad_r_l_merged_incorrect_predictions.txt",
+    "model_summary_file_name": "bad_r_l_merged_model_summary.txt"
+}
