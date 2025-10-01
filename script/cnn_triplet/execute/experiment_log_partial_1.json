@@ -1,0 +1,41 @@
+{
+    "start_time": "2025-10-01T18:23:23.670882",
+    "config": {
+        "epochs": 30,
+        "batch_size": 8,
+        "learning_rate": 0.000392,
+        "embedding_dim": 128,
+        "confidence_rate": 0.4
+    },
+    "datasets": [
+        "sorted_dataset_scale_exclude_45",
+        "sorted_dataset_scale_exclude_90",
+        "sorted_dataset_scale_exclude_225",
+        "sorted_dataset_scale_exclude_270"
+    ],
+    "experiments": [
+        {
+            "dataset": "sorted_dataset_scale_exclude_45",
+            "config": {
+                "epochs": 30,
+                "batch_size": 8,
+                "learning_rate": 0.000392,
+                "embedding_dim": 128,
+                "confidence_rate": 0.4
+            },
+            "start_time": "2025-10-01T18:23:23.671882",
+            "steps": {
+                "training_testing": {
+                    "success": false,
+                    "execution_time": 14279.598853349686,
+                    "stdout": "ログは実行時に表示されました",
+                    "stderr": "ログは実行時に表示されました"
+                }
+            },
+            "total_time": 14279.601854085922,
+            "success": false,
+            "end_time": "2025-10-01T22:21:23.273737"
+        }
+    ],
+    "total_execution_time": 14279.60285449028
+}

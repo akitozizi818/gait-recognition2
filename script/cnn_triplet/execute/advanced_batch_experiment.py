@@ -33,9 +33,9 @@ EXPERIMENT_TEMPLATES = {
         "confidence_rate": 0.4
     },
     "standard": {
-        "epochs": 50,
+        "epochs": 30,
         "batch_size": 8,
-        "learning_rate": 0.0001,
+        "learning_rate": 0.000392,
         "embedding_dim": 128,
         "confidence_rate": 0.4
     },
@@ -47,9 +47,9 @@ EXPERIMENT_TEMPLATES = {
         "confidence_rate": 0.5
     },
     "comparison_study": [
-        {"epochs": 50, "batch_size": 8, "embedding_dim": 64, "learning_rate": 0.0001},
-        {"epochs": 50, "batch_size": 8, "embedding_dim": 128, "learning_rate": 0.0001},
-        {"epochs": 50, "batch_size": 8, "embedding_dim": 256, "learning_rate": 0.0001}
+        {"epochs": 30, "batch_size": 8, "embedding_dim": 64, "learning_rate": 0.000392},
+        {"epochs": 30, "batch_size": 8, "embedding_dim": 128, "learning_rate": 0.000392},
+        {"epochs": 30, "batch_size": 8, "embedding_dim": 256, "learning_rate": 0.000392}
     ]
 }
 

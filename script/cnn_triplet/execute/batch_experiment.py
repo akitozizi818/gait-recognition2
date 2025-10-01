@@ -27,6 +27,7 @@ DEFAULT_CONFIG = {
     "batch_size": 8,
     "learning_rate": 0.000392,
     "embedding_dim": 128,
+    "triplet_alpha": 0.2,
     "confidence_rate": 0.4
 }
 
