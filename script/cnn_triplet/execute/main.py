@@ -6,9 +6,33 @@ import json
 # Add parent directories to path to import modules
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'learning'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'test'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'learning_evaluate'))
 
 from separate_viewpoint import train_model
 from k_nn import evaluate_model, evaluate_with_different_k
+
+# Import learning evaluation functions with specific module names to avoid conflicts
+import sys
+import importlib.util
+
+# Function to load module from specific path
+def load_module_from_path(module_name, file_path):
+    spec = importlib.util.spec_from_file_location(module_name, file_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+# Load learning evaluation modules
+learning_eval_dir = os.path.join(os.path.dirname(__file__), '..', 'learning_evaluate')
+learning_knn_path = os.path.join(learning_eval_dir, 'k_nn.py')
+learning_kfold_path = os.path.join(learning_eval_dir, 'k_fold_cross_validation.py')
+
+learning_knn_module = load_module_from_path('learning_knn', learning_knn_path)
+learning_kfold_module = load_module_from_path('learning_kfold', learning_kfold_path)
+
+# Extract functions
+evaluate_training_data_knn = learning_knn_module.evaluate_training_data_knn
+k_fold_cross_validation = learning_kfold_module.k_fold_cross_validation
 
 
 def create_default_config(dataset_name="sorted_dataset_scale_exclude_45", confidence_rate=0.4):
@@ -126,6 +150,57 @@ def run_evaluation(config):
     return results, k_results
 
 
+def run_learning_evaluation(config, eval_type="both"):
+    """
+    Run the learning data evaluation process.
+
+    Args:
+        config (dict): Configuration dictionary
+        eval_type (str): Type of evaluation ("knn", "kfold", or "both")
+
+    Returns:
+        dict: Learning evaluation results
+    """
+    print("=" * 60)
+    print("STARTING LEARNING DATA EVALUATION PROCESS")
+    print("=" * 60)
+
+    # Check if model exists
+    model_path = os.path.join(config["output_dir"], config["model_name"])
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model not found: {model_path}. Please run training first.")
+
+    results = {}
+
+    if eval_type in ["knn", "both"]:
+        print("\n" + "=" * 40)
+        print("RUNNING k-NN EVALUATION")
+        print("=" * 40)
+
+        knn_results = evaluate_training_data_knn(
+            config,
+            k_values=[1, 3, 5, 7, 10],
+            test_size=0.3,
+            random_state=42
+        )
+        results["knn_evaluation"] = knn_results
+
+    if eval_type in ["kfold", "both"]:
+        print("\n" + "=" * 40)
+        print("RUNNING k-FOLD CROSS VALIDATION")
+        print("=" * 40)
+
+        kfold_results = k_fold_cross_validation(
+            config,
+            k_folds=5,
+            k_nn_values=[3, 5, 7, 10],
+            random_state=42
+        )
+        results["kfold_evaluation"] = kfold_results
+
+    return results
+
+
 def main():
     """
     Main function to handle command line arguments and execute training/testing.
@@ -133,8 +208,8 @@ def main():
     parser = argparse.ArgumentParser(description="CNN Triplet Loss Training and Evaluation")
 
     # Main action
-    parser.add_argument('action', choices=['train', 'test', 'both'],
-                        help='Action to perform: train, test, or both')
+    parser.add_argument('action', choices=['train', 'test', 'both', 'learning-eval'],
+                        help='Action to perform: train, test, both, or learning-eval')
 
     # Configuration options
     parser.add_argument('--config', type=str,
@@ -151,6 +226,10 @@ def main():
                         help='Learning rate (default: 0.0001)')
     parser.add_argument('--embedding-dim', type=int, default=128,
                         help='Embedding dimension (default: 128)')
+
+    # Learning evaluation options
+    parser.add_argument('--eval-type', type=str, choices=['knn', 'kfold', 'both'], default='both',
+                        help='Type of learning evaluation: knn, kfold, or both (default: both)')
 
     # Output options
     parser.add_argument('--save-config', type=str,
@@ -194,6 +273,10 @@ def main():
 
             # Then run evaluation
             run_evaluation(config)
+
+        elif args.action == 'learning-eval':
+            # Run learning data evaluation
+            run_learning_evaluation(config, eval_type=args.eval_type)
 
         print("\n" + "=" * 50)
         print("PROCESS COMPLETED SUCCESSFULLY")

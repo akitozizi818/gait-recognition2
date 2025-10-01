@@ -24,6 +24,8 @@ DEFAULT_CONFIG = {
 try:
     from .learning.separate_viewpoint import train_model, create_embedding_model
     from .test.k_nn import evaluate_model, evaluate_with_different_k
+    from .learning_evaluate.k_nn import evaluate_training_data_knn
+    from .learning_evaluate.k_fold_cross_validation import k_fold_cross_validation
 
     # パッケージレベルで利用可能な関数のリスト
     __all__ = [
@@ -31,6 +33,8 @@ try:
         'create_embedding_model',
         'evaluate_model',
         'evaluate_with_different_k',
+        'evaluate_training_data_knn',
+        'k_fold_cross_validation',
         'DEFAULT_CONFIG'
     ]
 

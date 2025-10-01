@@ -130,9 +130,27 @@ def evaluate_model(config, model_path=None):
         "num_classes": len(class_names)
     }
 
-    # Save detailed results
+    # Save detailed results（NumPy型を標準型に変換）
+    def convert_numpy_types(obj):
+        """NumPy型をJSON serializable型に変換"""
+        if isinstance(obj, (np.integer, np.int64, np.int32)):
+            return int(obj)
+        elif isinstance(obj, (np.floating, np.float64, np.float32)):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, dict):
+            return {key: convert_numpy_types(value) for key, value in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [convert_numpy_types(item) for item in obj]
+        elif hasattr(obj, 'item'):  # NumPy scalar
+            return obj.item()
+        return obj
+
+    json_safe_results = convert_numpy_types(results)
+
     with open(os.path.join(output_dir, "knn_evaluation_results.json"), "w") as f:
-        json.dump(results, f, indent=4)
+        json.dump(json_safe_results, f, indent=4)
 
     # Save simple accuracy report
     with open(os.path.join(output_dir, "knn_accuracy_report.txt"), "w") as f:
@@ -200,9 +218,10 @@ def evaluate_with_different_k(config, k_values=[1, 3, 5, 7, 10], model_path=None
         results[f"k_{k}"] = accuracy
         print(f"k={k}: accuracy = {accuracy:.4f}")
 
-    # Save results
+    # Save results（NumPy型を標準型に変換）
+    json_safe_results = convert_numpy_types(results)
     with open(os.path.join(config["output_dir"], "knn_k_comparison.json"), "w") as f:
-        json.dump(results, f, indent=4)
+        json.dump(json_safe_results, f, indent=4)
 
     return results
 
