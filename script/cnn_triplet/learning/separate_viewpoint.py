@@ -28,7 +28,8 @@ class ConfidenceDropout(tf.keras.layers.Layer):
 
 
 class TripletGenerator(tf.keras.utils.Sequence):
-    def __init__(self, image_dir, confidence_map_dir, batch_size, img_size, shuffle=True):
+    def __init__(self, image_dir, confidence_map_dir, batch_size, img_size, shuffle=True, **kwargs):
+        super().__init__(**kwargs)
         self.image_dir = image_dir
         self.confidence_map_dir = confidence_map_dir
         self.batch_size = batch_size
@@ -81,8 +82,8 @@ class TripletGenerator(tf.keras.utils.Sequence):
             positives_conf.append(positive_conf_map)
             negatives_conf.append(negative_conf_map)
 
-        return [np.array(anchors_img), np.array(positives_img), np.array(negatives_img),
-                np.array(anchors_conf), np.array(positives_conf), np.array(negatives_conf)], np.zeros(self.batch_size)
+        return (np.array(anchors_img), np.array(positives_img), np.array(negatives_img),
+                np.array(anchors_conf), np.array(positives_conf), np.array(negatives_conf)), np.zeros(self.batch_size)
 
     def _load_image_and_confidence(self, file_path):
         image_path = os.path.join(self.image_dir, file_path)

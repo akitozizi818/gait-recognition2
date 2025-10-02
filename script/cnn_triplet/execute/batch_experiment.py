@@ -15,7 +15,7 @@ from datetime import datetime
 
 # 実験対象のデータセット
 DATASETS = [
-    "sorted_dataset_scale_exclude_45",
+    # "sorted_dataset_scale_exclude_45",
     "sorted_dataset_scale_exclude_90",
     "sorted_dataset_scale_exclude_225",
     "sorted_dataset_scale_exclude_270"
