@@ -15,7 +15,7 @@ from datetime import datetime
 
 # 実験対象のデータセット
 DATASETS = [
-    # "sorted_dataset_scale_exclude_45",
+    "sorted_dataset_scale_exclude_45",
     "sorted_dataset_scale_exclude_90",
     "sorted_dataset_scale_exclude_225",
     "sorted_dataset_scale_exclude_270"
@@ -28,7 +28,7 @@ DEFAULT_CONFIG = {
     "learning_rate": 0.000392,
     "embedding_dim": 128,
     "triplet_alpha": 0.2,
-    "confidence_rate": 0.4
+    "confidence_rate": 0
 }
 
 

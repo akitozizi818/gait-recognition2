@@ -241,7 +241,7 @@ def train_model(config):
 if __name__ == "__main__":
     # Default configuration for testing
     dataset_name = "sorted_dataset_scale_exclude_45"
-    confidence_rate = 0.4
+    confidence_rate = 0
 
     config = {
         "dataset_root": f"../../../data/{dataset_name}/dataset",
@@ -251,10 +251,10 @@ if __name__ == "__main__":
         "img_size": (48, 48),
         "batch_size": 8,
         "num_classes": 10,
-        "epochs": 50,
+        "epochs": 30,
         "embedding_dim": 128,
         "triplet_alpha": 0.2,
-        "learning_rate": 0.0001,
+        "learning_rate": 0.000392,
         "model_name": "embedding_model.h5",
         "config_file_name": "config.json",
         "confidence_rate": confidence_rate

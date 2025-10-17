@@ -101,7 +101,36 @@
             "total_time": 9997.581033945084,
             "success": true,
             "end_time": "2025-10-04T03:40:08.982206"
+        },
+        {
+            "dataset": "sorted_dataset_scale_exclude_270",
+            "config": {
+                "epochs": 30,
+                "batch_size": 8,
+                "learning_rate": 0.000392,
+                "embedding_dim": 128,
+                "triplet_alpha": 0.2,
+                "confidence_rate": 0
+            },
+            "start_time": "2025-10-04T03:40:08.985505",
+            "steps": {
+                "training_testing": {
+                    "success": true,
+                    "execution_time": 14524.976902484894,
+                    "stdout": "ログは実行時に表示されました",
+                    "stderr": "ログは実行時に表示されました"
+                },
+                "learning_evaluation": {
+                    "success": true,
+                    "execution_time": 149.65926480293274,
+                    "stdout": "ログは実行時に表示されました",
+                    "stderr": "ログは実行時に表示されました"
+                }
+            },
+            "total_time": 14674.639147758484,
+            "success": true,
+            "end_time": "2025-10-04T07:44:43.624653"
         }
     ],
-    "total_execution_time": 34460.83818149567
+    "total_execution_time": 49135.480346918106
 }

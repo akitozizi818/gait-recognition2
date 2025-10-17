@@ -35,9 +35,9 @@ def load_test_data(data_dir, confidence_dir, img_size):
         img_size (tuple): Target image size (width, height)
 
     Returns:
-        tuple: (images, confidence_maps, labels, class_indices)
+        tuple: (images, confidence_maps, labels, class_indices, file_paths)
     """
-    images, conf_maps, labels = [], [], []
+    images, conf_maps, labels, file_paths = [], [], [], []
     class_indices = {name: i for i, name in enumerate(sorted(os.listdir(data_dir)))}
 
     for class_name, class_idx in class_indices.items():
@@ -54,8 +54,9 @@ def load_test_data(data_dir, confidence_dir, img_size):
                     images.append(img)
                     conf_maps.append(conf)
                     labels.append(class_idx)
+                    file_paths.append(filename)
 
-    return np.array(images), np.array(conf_maps), np.array(labels), class_indices
+    return np.array(images), np.array(conf_maps), np.array(labels), class_indices, file_paths
 
 
 def evaluate_model(config, model_path=None):
@@ -80,14 +81,14 @@ def evaluate_model(config, model_path=None):
 
     # Load training and test data
     print("Loading training data...")
-    train_images, train_conf, train_labels, train_class_indices = load_test_data(
+    train_images, train_conf, train_labels, train_class_indices, _ = load_test_data(
         config["dataset_root"],
         config["confidence_map_dir"],
         config["img_size"]
     )
 
     print("Loading test data...")
-    test_images, test_conf, test_labels, test_class_indices = load_test_data(
+    test_images, test_conf, test_labels, test_class_indices, test_files = load_test_data(
         config["test_data_dir"],
         config["confidence_map_dir"],
         config["img_size"]
@@ -162,6 +163,45 @@ def evaluate_model(config, model_path=None):
         f.write("Classification Report:\n")
         f.write(classification_report(test_labels, predictions, target_names=class_names))
 
+    # 視点ごとの正解率を計算
+    target_keywords = ["45", "90", "225", "270"]
+    viewpoint_results = {}
+
+    for keyword in target_keywords:
+        # ファイル名をアンダースコアで分割した1番目の要素でフィルタリング
+        indices = [
+            i for i, file_path in enumerate(test_files)
+            if keyword == file_path.split('_')[1]
+        ]
+
+        if not indices:
+            viewpoint_results[keyword] = {"match_ratio": 0, "total": 0, "matches": 0}
+            continue
+
+        # フィルタリングされたデータの正解ラベルと予測ラベル
+        filtered_true_classes = [test_labels[i] for i in indices]
+        filtered_predicted_classes = [predictions[i] for i in indices]
+
+        # 一致する数を計算
+        matches = sum(1 for true, pred in zip(filtered_true_classes, filtered_predicted_classes) if true == pred)
+        total = len(indices)
+        match_ratio = matches / total if total > 0 else 0
+
+        # 結果を保存
+        viewpoint_results[keyword] = {
+            "match_ratio": match_ratio,
+            "total": total,
+            "matches": matches
+        }
+
+    # 視点ごとの結果をテキストファイルに保存
+    with open(os.path.join(output_dir, "viewpoints_results.txt"), "w", encoding="utf-8") as file:
+        for keyword, result in viewpoint_results.items():
+            file.write(f"Keyword: {keyword}\n")
+            file.write(f"  Match Ratio: {result['match_ratio']:.2f}\n")
+            file.write(f"  Total Samples: {result['total']}\n")
+            file.write(f"  Matches: {result['matches']}\n\n")
+
     print(f"Evaluation results saved to: {output_dir}")
 
     return results
@@ -190,13 +230,13 @@ def evaluate_with_different_k(config, k_values=[1, 3, 5, 7, 10], model_path=None
 
     # Load data
     print("Loading data...")
-    train_images, train_conf, train_labels, _ = load_test_data(
+    train_images, train_conf, train_labels, _, _ = load_test_data(
         config["dataset_root"],
         config["confidence_map_dir"],
         config["img_size"]
     )
 
-    test_images, test_conf, test_labels, _ = load_test_data(
+    test_images, test_conf, test_labels, _, _ = load_test_data(
         config["test_data_dir"],
         config["confidence_map_dir"],
         config["img_size"]

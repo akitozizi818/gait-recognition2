@@ -1,19 +1,49 @@
 {
-    "start_time": "2025-10-02T04:27:19.353289",
+    "start_time": "2025-10-03T18:05:48.144306",
     "config": {
         "epochs": 30,
         "batch_size": 8,
         "learning_rate": 0.000392,
         "embedding_dim": 128,
         "triplet_alpha": 0.2,
-        "confidence_rate": 0.4
+        "confidence_rate": 0
     },
     "datasets": [
+        "sorted_dataset_scale_exclude_45",
         "sorted_dataset_scale_exclude_90",
         "sorted_dataset_scale_exclude_225",
         "sorted_dataset_scale_exclude_270"
     ],
     "experiments": [
+        {
+            "dataset": "sorted_dataset_scale_exclude_45",
+            "config": {
+                "epochs": 30,
+                "batch_size": 8,
+                "learning_rate": 0.000392,
+                "embedding_dim": 128,
+                "triplet_alpha": 0.2,
+                "confidence_rate": 0
+            },
+            "start_time": "2025-10-03T18:05:48.145272",
+            "steps": {
+                "training_testing": {
+                    "success": true,
+                    "execution_time": 11488.382017612457,
+                    "stdout": "ログは実行時に表示されました",
+                    "stderr": "ログは実行時に表示されました"
+                },
+                "learning_evaluation": {
+                    "success": true,
+                    "execution_time": 141.05133652687073,
+                    "stdout": "ログは実行時に表示されました",
+                    "stderr": "ログは実行時に表示されました"
+                }
+            },
+            "total_time": 11629.43533873558,
+            "success": true,
+            "end_time": "2025-10-03T21:19:37.580611"
+        },
         {
             "dataset": "sorted_dataset_scale_exclude_90",
             "config": {
@@ -22,26 +52,26 @@
                 "learning_rate": 0.000392,
                 "embedding_dim": 128,
                 "triplet_alpha": 0.2,
-                "confidence_rate": 0.4
+                "confidence_rate": 0
             },
-            "start_time": "2025-10-02T04:27:19.353289",
+            "start_time": "2025-10-03T21:19:37.591042",
             "steps": {
                 "training_testing": {
                     "success": true,
-                    "execution_time": 10661.387651920319,
+                    "execution_time": 12686.178127765656,
                     "stdout": "ログは実行時に表示されました",
                     "stderr": "ログは実行時に表示されました"
                 },
                 "learning_evaluation": {
                     "success": true,
-                    "execution_time": 142.35311794281006,
+                    "execution_time": 147.6242480278015,
                     "stdout": "ログは実行時に表示されました",
                     "stderr": "ログは実行時に表示されました"
                 }
             },
-            "total_time": 10803.74754524231,
+            "total_time": 12833.804957389832,
             "success": true,
-            "end_time": "2025-10-02T07:27:23.100834"
+            "end_time": "2025-10-04T00:53:31.395999"
         },
         {
             "dataset": "sorted_dataset_scale_exclude_225",
@@ -51,26 +81,26 @@
                 "learning_rate": 0.000392,
                 "embedding_dim": 128,
                 "triplet_alpha": 0.2,
-                "confidence_rate": 0.4
+                "confidence_rate": 0
             },
-            "start_time": "2025-10-02T07:27:23.109808",
+            "start_time": "2025-10-04T00:53:31.401172",
             "steps": {
                 "training_testing": {
                     "success": true,
-                    "execution_time": 10939.594502210617,
+                    "execution_time": 9866.265450716019,
                     "stdout": "ログは実行時に表示されました",
                     "stderr": "ログは実行時に表示されました"
                 },
                 "learning_evaluation": {
                     "success": true,
-                    "execution_time": 131.57470297813416,
+                    "execution_time": 131.31181144714355,
                     "stdout": "ログは実行時に表示されました",
                     "stderr": "ログは実行時に表示されました"
                 }
             },
-            "total_time": 11071.184655427933,
+            "total_time": 9997.581033945084,
             "success": true,
-            "end_time": "2025-10-02T10:31:54.294463"
+            "end_time": "2025-10-04T03:40:08.982206"
         },
         {
             "dataset": "sorted_dataset_scale_exclude_270",
@@ -80,28 +110,28 @@
                 "learning_rate": 0.000392,
                 "embedding_dim": 128,
                 "triplet_alpha": 0.2,
-                "confidence_rate": 0.4
+                "confidence_rate": 0
             },
-            "start_time": "2025-10-02T10:31:54.305616",
+            "start_time": "2025-10-04T03:40:08.985505",
             "steps": {
                 "training_testing": {
                     "success": true,
-                    "execution_time": 10476.504425764084,
+                    "execution_time": 14524.976902484894,
                     "stdout": "ログは実行時に表示されました",
                     "stderr": "ログは実行時に表示されました"
                 },
                 "learning_evaluation": {
                     "success": true,
-                    "execution_time": 130.50037121772766,
+                    "execution_time": 149.65926480293274,
                     "stdout": "ログは実行時に表示されました",
                     "stderr": "ログは実行時に表示されました"
                 }
             },
-            "total_time": 10607.004796981812,
+            "total_time": 14674.639147758484,
             "success": true,
-            "end_time": "2025-10-02T13:28:41.310413"
+            "end_time": "2025-10-04T07:44:43.624653"
         }
     ],
-    "total_execution_time": 32481.96874690056,
-    "end_time": "2025-10-02T13:28:41.322035"
+    "total_execution_time": 49135.482375860214,
+    "end_time": "2025-10-04T07:44:43.626682"
 }
